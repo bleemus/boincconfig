@@ -1,0 +1,16 @@
+#cloud-config
+
+packages:
+- boinc-client
+- unattended-upgrades
+
+write_files:
+- content: |
+    APT::Periodic::Download-Upgradeable-Packages "1";
+    APT::Periodic::AutocleanInterval "7";
+  path: /etc/apt/apt.conf.d/20auto-upgrades
+  append: true
+
+runcmd:
+- [ 'boinccmd', --set_run_mode, always ]
+- [ 'boinccmd', --project_attach, "http://www.worldcommunitygrid.org", "499540_82dce48c62a8fb0de7ab4c248db6ef0b" ]
